@@ -3,7 +3,7 @@
 	"name": "Copy Image",
 	"version": "1.1.1",
 	"minAppVersion": "0.15.0",
-	"description": "Easily copy image from Obsidian to clipboard by right clicking image.",
+	"description": "Copy any image to the clipboard, reveal it in your file explorer, or open it in your browser — from a hover toolbar.",
 	"author": "Felipe D.S. Lima",
 	"authorUrl": "https://github.com/felipe-ds-lima",
 	"fundingUrl": "https://www.buymeacoffee.com/felipe.ds.lima",
