@@ -12,8 +12,6 @@ image.
   - **Copy to clipboard**: copy the image so you can paste it anywhere.
   - **Reveal / Open**: for a local image, reveal it in your system file
     explorer (Finder / Explorer); for a remote image, open it in your browser.
-- **Command**: a `Copy image to clipboard` command (assign a hotkey in
-  *Settings → Hotkeys*) copies the image on the current cursor line.
 - **Mobile**: touch and hold an image for one second to copy it.
 
 ## Manual Installation
@@ -33,9 +31,6 @@ image.
 2. Click the **copy** icon to copy the image to the clipboard.
 3. Click the **folder** icon to reveal a local image in your file explorer, or
    the **external-link** icon to open a remote image in your browser.
-
-Alternatively, place the cursor on a line containing an image and run the
-`Copy image to clipboard` command (bind it to a hotkey for quick access).
 
 ### Mobile
 

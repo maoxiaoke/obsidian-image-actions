@@ -2,20 +2,9 @@ import {
 	Notice,
 	Plugin,
 	Platform,
-	Editor,
-	MarkdownView,
 	setIcon,
 	FileSystemAdapter,
 } from "obsidian";
-
-// An image referenced from the markdown source: either a vault file
-// (`![[name.png]]` / `![](relative/path.png)`) or an external/data URL
-// (`![](https://...)`).
-type ImageRef =
-	| { kind: "vault"; name: string }
-	| { kind: "url"; url: string };
-
-const SUPPORTED_EXTENSIONS = ["bmp", "gif", "jpeg", "jpg", "png", "tiff", "webp", "svg"];
 
 const BUTTON_STYLE = [
 	"display: flex",
@@ -69,14 +58,6 @@ export default class CopyImagePlugin extends Plugin {
 				{ capture: true }
 			);
 		}
-
-		// Command (assign a hotkey in settings) — copies the image on the line
-		// at the cursor.
-		this.addCommand({
-			id: "copy-image",
-			name: "Copy image to clipboard",
-			editorCallback: this.handleCommand.bind(this),
-		});
 	}
 
 	onunload() {
@@ -249,72 +230,6 @@ export default class CopyImagePlugin extends Plugin {
 			/* not a parseable URL */
 		}
 		return null;
-	}
-
-	// --- Command path ------------------------------------------------------
-
-	private async handleCommand(editor: Editor, _view: MarkdownView) {
-		const ref = this.findImageRef(editor.getLine(editor.getCursor().line));
-		if (!ref) {
-			new Notice("Not an image file or not supported...");
-			return;
-		}
-		try {
-			new Notice("Copying the image...");
-			await this.trySetFocus();
-			await this.waitForFocus();
-			await this.copyImageByRef(ref);
-		} catch (e) {
-			new Notice(e.message);
-		}
-	}
-
-	// Parse the first image link out of a markdown source line.
-	private findImageRef(line: string): ImageRef | null {
-		// Wikilink embed: ![[name.png|alias]]
-		const wiki = line.match(/!\[\[([^\]|]+)(?:\|[^\]]*)?\]\]/);
-		if (wiki) {
-			const name = (wiki[1].trim().split("/").pop() ?? "");
-			if (this.isSupportedImage(name)) return { kind: "vault", name };
-		}
-
-		// Markdown image: ![alt](url "optional title")
-		const md = line.match(/!\[[^\]]*\]\(\s*<?([^)>\s]+)>?(?:\s+["'][^"']*["'])?\s*\)/);
-		if (md) {
-			const raw = md[1].trim();
-			if (/^(https?:|app:|data:)/i.test(raw)) {
-				return { kind: "url", url: raw };
-			}
-			const name = (decodeURI(raw).split("/").pop() ?? "");
-			if (this.isSupportedImage(name)) return { kind: "vault", name };
-		}
-
-		return null;
-	}
-
-	private isSupportedImage(name: string): boolean {
-		const ext = name.split(".").pop()?.toLowerCase();
-		return !!ext && SUPPORTED_EXTENSIONS.includes(ext);
-	}
-
-	// Resolve the source URL for an ImageRef, load it, and copy it.
-	private async copyImageByRef(ref: ImageRef) {
-		let url: string;
-		if (ref.kind === "url") {
-			url = ref.url;
-		} else {
-			const file = this.app.vault.getFiles().find((f) => f.name === ref.name);
-			if (!file) {
-				new Notice("Image file not found in vault...");
-				return;
-			}
-			url = this.app.vault.adapter.getResourcePath(file.path);
-		}
-
-		const img = new Image();
-		img.crossOrigin = "anonymous";
-		img.src = url;
-		await this.copyImageElement(img);
 	}
 
 	// --- Mobile touch path -------------------------------------------------
