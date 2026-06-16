@@ -1,4 +1,4 @@
-# Obsidian Copy Image Plugin
+# Obsidian Image Actions
 
 Quickly copy any image in Obsidian to your clipboard, reveal it in your file
 explorer, or open it in your browser — straight from a hover toolbar on the
@@ -21,7 +21,7 @@ image.
 1. In Obsidian, open Settings > Community plugins.
 2. Turn off Restricted mode.
 3. Click on Browse community plugins.
-4. Search for "Copy Image".
+4. Search for "Image Actions".
 5. Click Install.
 6. Once installed, toggle the plugin on in the list of installed plugins.
 
@@ -48,4 +48,4 @@ Alternatively, place the cursor on a line containing an image and run the
 - Copying a remote image requires it to be served with CORS headers that allow
   the page to read it; otherwise only locally-stored images can be copied.
 
-Enjoy your enhanced Obsidian experience with the Obsidian Copy Image Plugin!
+Enjoy your enhanced Obsidian experience with Obsidian Image Actions!
