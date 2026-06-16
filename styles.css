@@ -1,0 +1,25 @@
+.copy-image-toolbar {
+	position: fixed;
+	z-index: var(--layer-popover, 100);
+	display: none;
+	gap: 4px;
+}
+
+.copy-image-toolbar.is-visible {
+	display: flex;
+}
+
+.copy-image-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	padding: 4px;
+	border-radius: 6px;
+	cursor: pointer;
+	color: var(--text-normal);
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}

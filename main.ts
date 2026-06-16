@@ -6,21 +6,6 @@ import {
 	FileSystemAdapter,
 } from "obsidian";
 
-const BUTTON_STYLE = [
-	"display: flex",
-	"align-items: center",
-	"justify-content: center",
-	"width: 28px",
-	"height: 28px",
-	"padding: 4px",
-	"border-radius: 6px",
-	"cursor: pointer",
-	"color: var(--text-normal)",
-	"background: var(--background-secondary)",
-	"border: 1px solid var(--background-modifier-border)",
-	"box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25)",
-].join(";");
-
 export default class CopyImagePlugin extends Plugin {
 	touchTime = 0;
 	// Floating toolbar shown on the image the mouse is hovering over.
@@ -70,20 +55,12 @@ export default class CopyImagePlugin extends Plugin {
 
 	private setupToolbar() {
 		const toolbar = document.body.createDiv({ cls: "copy-image-toolbar" });
-		toolbar.style.cssText = [
-			"position: fixed",
-			"z-index: var(--layer-popover, 100)",
-			"display: none",
-			"gap: 4px",
-		].join(";");
 
 		const copyButton = toolbar.createDiv({ cls: "copy-image-button" });
-		copyButton.style.cssText = BUTTON_STYLE;
 		setIcon(copyButton, "copy");
 		copyButton.setAttribute("aria-label", "Copy image to clipboard");
 
 		const actionButton = toolbar.createDiv({ cls: "copy-image-button" });
-		actionButton.style.cssText = BUTTON_STYLE;
 
 		// Don't let pressing a button move the editor caret or steal focus.
 		toolbar.addEventListener("mousedown", (e) => {
@@ -144,7 +121,7 @@ export default class CopyImagePlugin extends Plugin {
 			);
 		}
 
-		this.toolbar.style.display = "flex";
+		this.toolbar.addClass("is-visible");
 
 		const rect = image.getBoundingClientRect();
 		const margin = 8;
@@ -160,13 +137,12 @@ export default class CopyImagePlugin extends Plugin {
 		top = Math.min(top, window.innerHeight - h - margin);
 		top = Math.max(top, rect.top + margin);
 
-		this.toolbar.style.left = `${left}px`;
-		this.toolbar.style.top = `${top}px`;
+		this.toolbar.setCssStyles({ left: `${left}px`, top: `${top}px` });
 	}
 
 	private hideToolbar() {
 		this.hoverImage = null;
-		if (this.toolbar) this.toolbar.style.display = "none";
+		this.toolbar?.removeClass("is-visible");
 	}
 
 	private async copyImage(image: HTMLImageElement) {
