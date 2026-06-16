@@ -1,7 +1,7 @@
 {
 	"name": "image-actions",
 	"displayName": "Image Actions",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "Copy any image to the clipboard, reveal it in your file explorer, or open it in your browser — from a hover toolbar.",
 	"main": "main.js",
 	"scripts": {
